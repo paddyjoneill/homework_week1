@@ -78,17 +78,29 @@ def customer_can_afford_pet(customer, new_pet)
 end
 
 def sell_pet_to_customer(pet_shop, pet_name, customer)
-  for pet in pet_shop[:pets]
-    if pet[:name] == pet_name
-      pet_shop[:pets].delete(pet)
+
+  if pet_name != nil
+
+    for pet in pet_shop[:pets]
+
+      pet1 = pet[:name]
+      pet2 = pet_name[:name]
+
+      if pet1 == pet2
+
+        if customer[:cash] >= pet_name[:price]
+
+          customer[:pets] << pet_name
+          pet_shop[:admin][:pets_sold] +=1
+
+          customer[:cash] -= pet_name[:price]
+
+          pet_shop[:admin][:total_cash] += pet_name[:price]
+
+          pet_shop[:pets].delete(pet)
+
+        end
+      end
     end
   end
-
-  customer[:pets] << pet_name
-  pet_shop[:admin][:pets_sold] +=1
-
-  customer[:cash] -= pet_name[:price]
-
-  pet_shop[:admin][:total_cash] += pet_name[:price]
-
 end
